@@ -114,7 +114,7 @@ export class GrowlComponent extends React.Component {
     }
 
     return (
-      <Outer>
+      <Outer style={{ position: "fixed", top: 0, right: 0 }}>
         {items.map(item => (
           <Growl
             key={item.key}
