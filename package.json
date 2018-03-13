@@ -1,7 +1,7 @@
 {
   "name": "@crystallize/react-growl",
   "description": "A React package to do growl feedback",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
@@ -19,8 +19,13 @@
   },
   "main": "build/index.js",
   "babel": {
-    "presets": ["env"],
-    "plugins": ["transform-object-rest-spread", "transform-react-jsx"]
+    "presets": [
+      "env"
+    ],
+    "plugins": [
+      "transform-object-rest-spread",
+      "transform-react-jsx"
+    ]
   },
   "dependencies": {
     "event-emitter": "^0.3.5",
