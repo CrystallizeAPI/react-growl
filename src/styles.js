@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Outer = styled.div`
+export const Outer = styled.div.attrs({
+  className: 'crystallize-growl'
+})`
   position: fixed;
   z-index: 999;
   top: 15px;
@@ -12,7 +14,9 @@ export const Outer = styled.div`
   align-items: center;
 `;
 
-export const Growl = styled.div`
+export const Growl = styled.div.attrs({
+  className: 'crystallize-growl__item'
+})`
   padding: 10px 20px;
   background: #fff;
   box-shadow: 0 0 5px #000;

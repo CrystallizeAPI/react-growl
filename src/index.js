@@ -36,13 +36,13 @@ export class GrowlComponent extends React.Component {
     const defaultOptions = {
       timeout: 7000,
       key: this.getKey(),
-      animatedIn: false,
+      animatedIn: false
     };
 
     let growl;
     if (typeof _growl === 'string') {
       growl = {
-        message: _growl,
+        message: _growl
       };
     } else {
       growl = _growl;
@@ -61,7 +61,7 @@ export class GrowlComponent extends React.Component {
     growl.timeoutDate = new Date(+new Date() + growl.timeout);
 
     this.setState({
-      items: [...this.state.items, growl],
+      items: [...this.state.items, growl]
     });
 
     growl.hide = () => this.removeGrowl(growl.key);
@@ -76,7 +76,7 @@ export class GrowlComponent extends React.Component {
       item.animatedIn = true;
 
       return {
-        items,
+        items
       };
     });
   }
@@ -89,7 +89,7 @@ export class GrowlComponent extends React.Component {
 
     this.setState(
       {
-        items: [...this.state.items],
+        items: [...this.state.items]
       },
       () => {
         setTimeout(() => {
@@ -98,8 +98,8 @@ export class GrowlComponent extends React.Component {
             return {
               items: [
                 ...state.items.slice(0, index),
-                ...state.items.slice(index + 1),
-              ],
+                ...state.items.slice(index + 1)
+              ]
             };
           });
         }, 100);
