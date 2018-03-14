@@ -110,13 +110,12 @@ export class GrowlComponent extends React.Component {
   render() {
     const { items } = this.state;
 
-    // if (!items.length) {
-    //   return null;
-    // }
+    if (!items.length) {
+      return null;
+    }
 
     return (
       <Outer>
-        Testing...
         {items.map(item => (
           <Growl
             key={item.key}

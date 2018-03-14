@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Outer = styled.div`
   position: fixed;
@@ -18,11 +18,10 @@ export const Growl = styled.div`
   box-shadow: 0 0 5px #000;
   cursor: pointer;
   color: #333;
-  border-radius: 20px;
 
   transition: transform 100ms, opacity 100ms;
-  transform: ${p => (p.animatedIn ? "none" : "scale(.75)")};
-  opacity: ${p => (p.animatedIn ? "1" : "0")};
+  transform: ${p => (p.animatedIn ? 'none' : 'scale(.75)')};
+  opacity: ${p => (p.animatedIn ? '1' : '0')};
 
   &:not(:first-child) {
     margin-top: 5px;
