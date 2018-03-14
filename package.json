@@ -2,33 +2,27 @@
   "name": "@crystallize/react-growl",
   "description": "A React package to do growl feedback",
   "version": "0.0.2",
-  "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-env": "^1.5.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1"
-  },
+  "main": "dist/index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "webpack"
+    "build": "babel src -d dist",
+    "prepublish": "npm run build"
   },
-  "main": "build/index.js",
-  "babel": {
-    "presets": [
-      "env"
-    ],
-    "plugins": [
-      "transform-object-rest-spread",
-      "transform-react-jsx"
-    ]
+  "peerDependencies": {
+    "styled-components": "^3.1.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babel-plugin-styled-components": "^1.5.0",
+    "react": "^16.2.0",
+    "react-test-renderer": "^16.2.0",
+    "styled-components": "^3.1.4"
   },
   "dependencies": {
-    "event-emitter": "^0.3.5",
-    "styled-components": "^3.2.1"
+    "event-emitter": "^0.3.5"
   }
 }

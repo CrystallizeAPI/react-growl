@@ -1,6 +1,7 @@
-import React from "react";
-import EE from "event-emitter";
-import { Outer, Growl } from "./styles";
+import React from 'react';
+import EE from 'event-emitter';
+
+import { Outer, Growl } from './styles';
 
 const emitter = new EE();
 
@@ -17,37 +18,37 @@ export class GrowlComponent extends React.Component {
     this.removeGrowl = this.removeGrowl.bind(this);
   }
 
-  getKey() {
-    return `item-${this.key++}`;
-  }
-
   componentDidMount() {
-    emitter.on("add", this.addGrowl);
-    emitter.on("remove", this.removeGrowl);
+    emitter.on('add', this.addGrowl);
+    emitter.on('remove', this.removeGrowl);
   }
 
   componentWillUnmount() {
-    emitter.off("add", this.addGrowl);
-    emitter.off("remove", this.removeGrowl);
+    emitter.off('add', this.addGrowl);
+    emitter.off('remove', this.removeGrowl);
+  }
+
+  getKey() {
+    return `item-${this.key++}`;
   }
 
   addGrowl(_growl) {
     const defaultOptions = {
       timeout: 7000,
       key: this.getKey(),
-      animatedIn: false
+      animatedIn: false,
     };
 
     let growl;
-    if (typeof _growl === "string") {
+    if (typeof _growl === 'string') {
       growl = {
-        message: _growl
+        message: _growl,
       };
     } else {
       growl = _growl;
     }
 
-    growl = { ...defaultOptions, ...growl };
+    growl = Object.assign({}, defaultOptions, growl);
 
     growl.hideTimeout = setTimeout(() => {
       this.removeGrowl(growl.key);
@@ -60,7 +61,7 @@ export class GrowlComponent extends React.Component {
     growl.timeoutDate = new Date(+new Date() + growl.timeout);
 
     this.setState({
-      items: [...this.state.items, growl]
+      items: [...this.state.items, growl],
     });
 
     growl.hide = () => this.removeGrowl(growl.key);
@@ -75,7 +76,7 @@ export class GrowlComponent extends React.Component {
       item.animatedIn = true;
 
       return {
-        items
+        items,
       };
     });
   }
@@ -88,7 +89,7 @@ export class GrowlComponent extends React.Component {
 
     this.setState(
       {
-        items: [...this.state.items]
+        items: [...this.state.items],
       },
       () => {
         setTimeout(() => {
@@ -97,8 +98,8 @@ export class GrowlComponent extends React.Component {
             return {
               items: [
                 ...state.items.slice(0, index),
-                ...state.items.slice(index + 1)
-              ]
+                ...state.items.slice(index + 1),
+              ],
             };
           });
         }, 100);
@@ -109,12 +110,13 @@ export class GrowlComponent extends React.Component {
   render() {
     const { items } = this.state;
 
-    if (!items.length) {
-      return null;
-    }
+    // if (!items.length) {
+    //   return null;
+    // }
 
     return (
-      <Outer style={{ position: "fixed", top: 0, right: 0 }}>
+      <Outer>
+        Testing...
         {items.map(item => (
           <Growl
             key={item.key}
@@ -129,4 +131,4 @@ export class GrowlComponent extends React.Component {
   }
 }
 
-export default opt => emitter.emit("add", opt);
+export default opt => emitter.emit('add', opt);
