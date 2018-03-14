@@ -14,9 +14,9 @@ export const Outer = styled.div.attrs({
   align-items: center;
 `;
 
-function getItemClassNames(props) {
+function getItemClassNames({ type }) {
   const classes = ['__item'];
-  if (props.type) {
+  if (type) {
     classes.push(`__item--${type}`);
   }
   return classes.map(c => `crystallize-growl${c}`).join(' ');
