@@ -14,11 +14,19 @@ export const Outer = styled.div.attrs({
   align-items: center;
 `;
 
+function getItemClassNames(props) {
+  const classes = ['__item'];
+  if (props.type) {
+    classes.push(`__item--${type}`);
+  }
+  return classes.map(c => `crystallize-growl${c}`).join(' ');
+}
+
 export const Growl = styled.div.attrs({
-  className: 'crystallize-growl__item'
+  className: getItemClassNames
 })`
   padding: 10px 20px;
-  background: #fff;
+  background: ${p => (p.type === 'info' ? '#f58ea5' : '#fff')};
   box-shadow: 0 0 5px #000;
   cursor: pointer;
   color: #333;

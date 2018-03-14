@@ -36,7 +36,8 @@ export class GrowlComponent extends React.Component {
     const defaultOptions = {
       timeout: 7000,
       key: this.getKey(),
-      animatedIn: false
+      animatedIn: false,
+      type: 'info'
     };
 
     let growl;
@@ -121,6 +122,7 @@ export class GrowlComponent extends React.Component {
             key={item.key}
             onClick={() => this.removeGrowl(item.key)}
             animatedIn={item.animatedIn}
+            type={item.type}
           >
             {item.message}
           </Growl>
