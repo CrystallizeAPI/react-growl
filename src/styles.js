@@ -11,7 +11,7 @@ export const Outer = styled.div.attrs({
   right: 15px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
 
   ${p =>
     p.show &&
