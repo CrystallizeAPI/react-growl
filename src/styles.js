@@ -1,17 +1,24 @@
 import styled from 'styled-components';
 
 export const Outer = styled.div.attrs({
-  className: 'crystallize-growl'
+  className: 'crystallize-growl',
+  role: 'alert',
+  'aria-live': 'assertive'
 })`
   position: fixed;
   z-index: 999;
   top: 15px;
   right: 15px;
-  min-width: 100px;
-  max-width: 40vw;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  ${p =>
+    p.show &&
+    `
+    min-width: 100px;
+    max-width: 40vw;
+  `};
 `;
 
 function getItemClassNames({ type }) {
