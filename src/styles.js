@@ -29,11 +29,22 @@ function getItemClassNames({ type }) {
   return classes.map(c => `crystallize-growl${c}`).join(' ');
 }
 
+function getBackground({ type }) {
+  switch (type) {
+    case 'error':
+      return '#f58ea5';
+    case 'warning':
+      return 'orangered';
+    default:
+      return '#fff';
+  }
+}
+
 export const Growl = styled.div.attrs({
   className: getItemClassNames
 })`
   padding: 10px 20px;
-  background: ${p => (p.type === 'info' ? '#f58ea5' : '#fff')};
+  background: ${getBackground};
   box-shadow: 0 0 5px #000;
   cursor: pointer;
   color: #333;
