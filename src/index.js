@@ -1,5 +1,6 @@
 import React from 'react';
 import EE from 'event-emitter';
+import { PoseGroup } from 'react-pose';
 
 import { Outer, Growl } from './styles';
 
@@ -14,7 +15,6 @@ export class GrowlComponent extends React.Component {
 
     this.getKey = this.getKey.bind(this);
     this.addGrowl = this.addGrowl.bind(this);
-    this.animateInGrowl = this.animateInGrowl.bind(this);
     this.removeGrowl = this.removeGrowl.bind(this);
   }
 
@@ -26,8 +26,6 @@ export class GrowlComponent extends React.Component {
   componentWillUnmount() {
     emitter.off('add', this.addGrowl);
     emitter.off('remove', this.removeGrowl);
-
-    this.clearAnyPendingUpdates();
   }
 
   getKey() {
@@ -38,7 +36,6 @@ export class GrowlComponent extends React.Component {
     const defaultOptions = {
       timeout: 7000,
       key: this.getKey(),
-      animatedIn: false,
       type: 'info'
     };
 
@@ -53,16 +50,6 @@ export class GrowlComponent extends React.Component {
 
     growl = Object.assign({}, defaultOptions, growl);
 
-    growl.hideTimeout = setTimeout(() => {
-      this.removeGrowl(growl.key);
-    }, growl.timeout);
-
-    growl.animateInTimeout = setTimeout(() => {
-      this.animateInGrowl(growl.key);
-    }, 5);
-
-    growl.timeoutDate = new Date(+new Date() + growl.timeout);
-
     this.setState({
       items: [...this.state.items, growl]
     });
@@ -72,71 +59,30 @@ export class GrowlComponent extends React.Component {
     return growl;
   }
 
-  animateInGrowl(key) {
-    this.setState(state => {
-      const items = [...state.items];
-      const item = items.find(i => i.key === key);
-      item.animatedIn = true;
-
-      return {
-        items
-      };
-    });
-  }
-
   removeGrowl(key) {
-    const item = this.state.items.find(i => i.key === key);
-    item.animatedIn = false;
-    this.clearTimeoutsForGrowl(item);
-
-    this.setState(
-      {
-        items: [...this.state.items]
-      },
-      () => {
-        setTimeout(() => {
-          this.setState(state => {
-            const index = state.items.findIndex(i => i.key === key);
-            return {
-              items: [
-                ...state.items.slice(0, index),
-                ...state.items.slice(index + 1)
-              ]
-            };
-          });
-        }, 100);
-      }
-    );
-  }
-
-  clearTimeoutsForGrowl(item) {
-    clearTimeout(item.hideTimeout);
-    clearTimeout(item.animateInTimeout);
-  }
-
-  clearAnyPendingUpdates() {
-    this.state.items.forEach(this.clearTimeoutsForGrowl);
+    const { items } = this.state;
+    const index = items.findIndex(i => i.key === key);
+    this.setState({
+      items: [...items.slice(0, index), ...items.slice(index + 1)]
+    });
   }
 
   render() {
     const { items } = this.state;
 
-    if (!items.length) {
-      return <Outer />;
-    }
-
     return (
-      <Outer show>
-        {items.map(item => (
-          <Growl
-            key={item.key}
-            onClick={() => this.removeGrowl(item.key)}
-            animatedIn={item.animatedIn}
-            type={item.type}
-          >
-            {item.message}
-          </Growl>
-        ))}
+      <Outer>
+        <PoseGroup>
+          {items.map(item => (
+            <Growl
+              key={item.key}
+              onClick={() => this.removeGrowl(item.key)}
+              type={item.type}
+            >
+              {item.message}
+            </Growl>
+          ))}
+        </PoseGroup>
       </Outer>
     );
   }

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import posed from 'react-pose';
 
 export const Outer = styled.div.attrs({
   className: 'crystallize-growl',
@@ -12,13 +13,8 @@ export const Outer = styled.div.attrs({
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
-  ${p =>
-    p.show &&
-    `
-    min-width: 100px;
-    max-width: 40vw;
-  `};
+  min-width: 100px;
+  max-width: 40vw;
 `;
 
 function getItemClassNames({ type }) {
@@ -40,20 +36,27 @@ function getBackground({ type }) {
   }
 }
 
-export const Growl = styled.div.attrs({
+const GrowlPosed = posed.div({
+  enter: { opacity: 1, translateX: 0 },
+  exit: { opacity: 0, translateX: 100 }
+});
+
+export const Growl = styled(GrowlPosed).attrs({
   className: getItemClassNames
 })`
   padding: 10px 20px;
   background: ${getBackground};
   box-shadow: 0 0 5px #000;
-  cursor: pointer;
+  cursor: default;
   color: #333;
+  white-space: nowrap;
+  box-sizing: border-box;
 
-  transition: transform 100ms, opacity 100ms;
-  transform: ${p => (p.animatedIn ? 'none' : 'scale(.75)')};
-  opacity: ${p => (p.animatedIn ? '1' : '0')};
+  &:not(:last-child) {
+    margin-bottom: 5px;
+  }
 
-  &:not(:first-child) {
-    margin-top: 5px;
+  ::selection {
+    background: transparent;
   }
 `;
