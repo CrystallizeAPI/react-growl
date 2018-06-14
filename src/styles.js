@@ -25,14 +25,22 @@ function getItemClassNames({ type }) {
   return classes.map(c => `crystallize-growl${c}`).join(' ');
 }
 
-function getBackground({ type }) {
+function getTheme({ type }) {
   switch (type) {
     case 'error':
-      return '#f58ea5';
+      return `
+        background: orangered;
+        color: #fff;
+      `;
     case 'warning':
-      return 'orangered';
+      return `
+        background: #f58ea5;
+        box-shadow: 0 0 5px hsl(347, 84%, 26%);
+      `;
     default:
-      return '#fff';
+      return `
+        background: #fff;
+      `;
   }
 }
 
@@ -44,13 +52,16 @@ const GrowlPosed = posed.div({
 export const Growl = styled(GrowlPosed).attrs({
   className: getItemClassNames
 })`
-  padding: 10px 20px;
-  background: ${getBackground};
   box-shadow: 0 0 5px #000;
+  padding: 10px 20px;
   cursor: default;
   color: #333;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   box-sizing: border-box;
+  max-width: calc(100vw - 30px);
+  ${getTheme};
 
   &:not(:last-child) {
     margin-bottom: 5px;

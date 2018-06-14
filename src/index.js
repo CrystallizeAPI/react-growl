@@ -26,6 +26,7 @@ export class GrowlComponent extends React.Component {
   componentWillUnmount() {
     emitter.off('add', this.addGrowl);
     emitter.off('remove', this.removeGrowl);
+    this.removeAllTimeouts();
   }
 
   getKey() {
@@ -56,15 +57,30 @@ export class GrowlComponent extends React.Component {
 
     growl.hide = () => this.removeGrowl(growl.key);
 
+    growl.hideTimeout = setTimeout(growl.hide, growl.timeout);
+
+    growl.clearTimeouts = () => {
+      clearTimeout(growl.hideTimeout);
+    };
+
     return growl;
+  }
+
+  removeAllTimeouts() {
+    this.state.items.forEach(i => i.clearTimeouts());
   }
 
   removeGrowl(key) {
     const { items } = this.state;
     const index = items.findIndex(i => i.key === key);
-    this.setState({
-      items: [...items.slice(0, index), ...items.slice(index + 1)]
-    });
+
+    if (index !== -1) {
+      items[index].clearTimeouts();
+
+      this.setState({
+        items: [...items.slice(0, index), ...items.slice(index + 1)]
+      });
+    }
   }
 
   render() {
