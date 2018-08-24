@@ -37,6 +37,12 @@ function getTheme({ type }) {
         background: #f58ea5;
         box-shadow: 0 0 5px hsl(347, 84%, 26%);
       `;
+    case 'success':
+      return `
+        background: #75c575;
+        color: #fff;
+        box-shadow: 0 0 5px #75c575;
+      `;
     default:
       return `
         background: #fff;
@@ -62,6 +68,7 @@ export const Growl = styled(GrowlPosed).attrs({
   box-sizing: border-box;
   max-width: calc(100vw - 30px);
   ${getTheme};
+  transition: color 100ms, background-color 100ms;
 
   &:not(:last-child) {
     margin-bottom: 5px;

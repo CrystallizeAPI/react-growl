@@ -1,8 +1,28 @@
 import React from 'react';
 import faker from 'faker';
-import styled from 'styled-components';
 
 import growl, { GrowlComponent } from '../src';
+
+function stickyGrowl() {
+  growl({
+    message: 'You cannot click to remove me',
+    sticky: true
+  }).then(g => {
+    setTimeout(() => {
+      g.update({
+        type: 'success',
+        message: 'Hey, I just changed my own type =)'
+      });
+
+      setTimeout(() => {
+        g.update({
+          message: 'You can click to remove me now',
+          sticky: false
+        });
+      }, 2000);
+    }, 2000);
+  });
+}
 
 export default () => (
   <div>
@@ -36,6 +56,21 @@ export default () => (
         >
           type: error
         </button>
+      </p>
+      <p>
+        <button
+          onClick={() =>
+            growl({
+              type: 'success',
+              message: `Horray! ${faker.hacker.phrase()}`
+            })
+          }
+        >
+          type: success
+        </button>
+      </p>
+      <p>
+        <button onClick={stickyGrowl}>sticky</button>
       </p>
     </main>
     <GrowlComponent />

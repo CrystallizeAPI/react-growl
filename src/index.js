@@ -33,11 +33,12 @@ export class GrowlComponent extends React.Component {
     return `item-${this.key++}`;
   }
 
-  addGrowl(_growl) {
+  addGrowl({ callback, ..._growl }) {
     const defaultOptions = {
       timeout: 7000,
       key: this.getKey(),
-      type: 'info'
+      type: 'info',
+      sticky: false
     };
 
     let growl;
@@ -57,11 +58,28 @@ export class GrowlComponent extends React.Component {
 
     growl.hide = () => this.removeGrowl(growl.key);
 
-    growl.hideTimeout = setTimeout(growl.hide, growl.timeout);
+    growl.update = props => {
+      this.setState(({ items }) => {
+        const newItems = [...items];
+        const item = newItems.find(i => i.key === growl.key);
+        Object.assign(item, props);
+        return {
+          items: newItems
+        };
+      });
+    };
+
+    if (!growl.sticky) {
+      growl.hideTimeout = setTimeout(growl.hide, growl.timeout);
+    }
 
     growl.clearTimeouts = () => {
       clearTimeout(growl.hideTimeout);
     };
+
+    if (callback) {
+      callback(growl);
+    }
 
     return growl;
   }
@@ -92,7 +110,7 @@ export class GrowlComponent extends React.Component {
           {items.map(item => (
             <Growl
               key={item.key}
-              onClick={() => this.removeGrowl(item.key)}
+              onClick={() => !item.sticky && this.removeGrowl(item.key)}
               type={item.type}
             >
               {item.message}
@@ -104,4 +122,18 @@ export class GrowlComponent extends React.Component {
   }
 }
 
-export default opt => emitter.emit('add', opt);
+export default opt => {
+  return new Promise(resolve => {
+    let options = opt;
+    if (typeof opt === 'string') {
+      options = {
+        message: opt
+      };
+    }
+
+    emitter.emit('add', {
+      callback: resolve,
+      ...options
+    });
+  });
+};
