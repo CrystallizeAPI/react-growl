@@ -62,10 +62,12 @@ export class GrowlComponent extends React.Component {
       this.setState(({ items }) => {
         const newItems = [...items];
         const item = newItems.find(i => i.key === growl.key);
-        Object.assign(item, props);
-        return {
-          items: newItems
-        };
+        if (item) {
+          Object.assign(item, props);
+          return {
+            items: newItems
+          };
+        }
       });
     };
 
