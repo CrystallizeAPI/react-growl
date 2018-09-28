@@ -1,3 +1,5 @@
+![alt text](https://raw.githubusercontent.com/snowballdigital/react-growl/HEAD/media/logo.png 'Abstract robot with teeths')
+
 # @crystallize/react-growl
 
 ## Usage
