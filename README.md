@@ -4,6 +4,12 @@
 
 A package for [React Growl Notifications](https://crystallize.com/developers/react-components/react-growl-notifications). This is a generic React package initially built for the [React Commerce boilerplate](https://crystallize.com/developers) in [Crystallize](https://crystallize.com).
 
+## Install
+
+```
+yarn add @crystallize/react-growl
+```
+
 ## Usage
 
 ### In Layout or somewhere outside the routes:
