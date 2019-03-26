@@ -51,14 +51,14 @@ function getTheme({ type }) {
 }
 
 const GrowlPosed = posed.div({
-  enter: { opacity: 1, translateX: 0 },
-  exit: { opacity: 0, translateX: 100 }
+  enter: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 0.25 }
 });
 
 export const Growl = styled(GrowlPosed).attrs({
   className: getItemClassNames
 })`
-  box-shadow: 0 0 5px #000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   padding: 10px 20px;
   cursor: default;
   color: #333;
@@ -67,8 +67,10 @@ export const Growl = styled(GrowlPosed).attrs({
   text-overflow: ellipsis;
   box-sizing: border-box;
   max-width: calc(100vw - 30px);
-  ${getTheme};
   transition: color 100ms, background-color 100ms;
+  border-radius: 20px;
+  transform-origin: center center;
+  ${getTheme};
 
   &:not(:last-child) {
     margin-bottom: 5px;
