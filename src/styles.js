@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import posed from 'react-pose';
 
-export const Outer = styled.div.attrs({
+export const Outer = styled.div.attrs(() => ({
   className: 'crystallize-growl',
   role: 'alert',
   'aria-live': 'assertive'
-})`
+}))`
   position: fixed;
   z-index: 999;
   top: 15px;
@@ -13,8 +13,7 @@ export const Outer = styled.div.attrs({
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  min-width: 100px;
-  max-width: 40vw;
+  width: 0;
 `;
 
 function getItemClassNames({ type }) {
@@ -52,12 +51,12 @@ function getTheme({ type }) {
 
 const GrowlPosed = posed.div({
   enter: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.25 }
+  exit: { opacity: 0, scale: 0.5 }
 });
 
-export const Growl = styled(GrowlPosed).attrs({
+export const Growl = styled(GrowlPosed).attrs(() => ({
   className: getItemClassNames
-})`
+}))`
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   padding: 10px 20px;
   cursor: default;
@@ -66,14 +65,15 @@ export const Growl = styled(GrowlPosed).attrs({
   overflow: hidden;
   text-overflow: ellipsis;
   box-sizing: border-box;
-  max-width: calc(100vw - 30px);
   transition: color 100ms, background-color 100ms;
   border-radius: 20px;
   transform-origin: center center;
+  min-width: 100px;
+  max-width: 400vw;
   ${getTheme};
 
-  &:not(:last-child) {
-    margin-bottom: 5px;
+  &:not(:first-child) {
+    margin-top: 5px;
   }
 
   ::selection {
