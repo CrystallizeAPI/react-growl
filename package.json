@@ -18,21 +18,21 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-plugin-styled-components": "^1.5.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-core": "^6.26.3",
+    "babel-plugin-styled-components": "^1.10.6",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "faker": "^4.1.0",
-    "parcel-bundler": "^1.8.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-test-renderer": "^16.2.0",
-    "styled-components": "^4.2.0"
+    "parcel-bundler": "^1.12.4",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-test-renderer": "^16.10.2",
+    "styled-components": "^4.4.0"
   },
   "dependencies": {
     "event-emitter": "^0.3.5",
-    "react-pose": "^4.0.8"
+    "react-pose": "^4.0.9"
   }
 }
