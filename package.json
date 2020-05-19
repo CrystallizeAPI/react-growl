@@ -24,8 +24,6 @@
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
     "faker": "^4.1.0",
     "framer-motion": "^1.11.0",
     "parcel-bundler": "^1.12.4",
