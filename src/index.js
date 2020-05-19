@@ -1,82 +1,86 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import EE from 'event-emitter';
-import { PoseGroup } from 'react-pose';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { Outer, Growl } from './styles';
 
 const emitter = new EE();
 
-export class GrowlComponent extends React.Component {
-  constructor(props) {
-    super(props);
+const getKey = (function () {
+  let index = 0;
 
-    this.state = { items: [] };
-    this.key = 0;
+  return () => index++;
+})();
 
-    this.getKey = this.getKey.bind(this);
-    this.addGrowl = this.addGrowl.bind(this);
-    this.removeGrowl = this.removeGrowl.bind(this);
+export function GrowlScene({ growlComponent, ...props }) {
+  const [items, setItems] = useState([]);
+
+  // Listen for emitter events
+  useEffect(() => {
+    emitter.on('add', addGrowl);
+    emitter.on('remove', removeGrowl);
+
+    return () => {
+      emitter.off('add', addGrowl);
+      emitter.off('remove', removeGrowl);
+    };
+  });
+
+  // Remove old growls
+  useEffect(() => {
+    function check() {
+      const now = Date.now();
+      const itemsToKeep = items.filter((item) => {
+        if ('removeAt' in item && item.removeAt <= now) {
+          return false;
+        }
+        return true;
+      });
+      if (itemsToKeep.length < items.length) {
+        setItems(itemsToKeep);
+      }
+    }
+
+    let interval = setInterval(check, 50);
+    return () => clearInterval(interval);
+  }, [items]);
+
+  function removeGrowl(key) {
+    const index = items.findIndex((i) => i.key === key);
+
+    if (index !== -1) {
+      setItems([...items.slice(0, index), ...items.slice(index + 1)]);
+    }
   }
 
-  componentDidMount() {
-    emitter.on('add', this.addGrowl);
-    emitter.on('remove', this.removeGrowl);
-  }
-
-  componentWillUnmount() {
-    emitter.off('add', this.addGrowl);
-    emitter.off('remove', this.removeGrowl);
-    this.removeAllTimeouts();
-  }
-
-  getKey() {
-    return `item-${this.key++}`;
-  }
-
-  addGrowl({ callback, ..._growl }) {
+  function addGrowl({ callback, ...rest }) {
     const defaultOptions = {
       timeout: 7000,
-      key: this.getKey(),
+      key: getKey(),
       type: 'info',
-      sticky: false
+      sticky: false,
     };
 
-    let growl;
-    if (typeof _growl === 'string') {
-      growl = {
-        message: _growl
-      };
-    } else {
-      growl = _growl;
-    }
-
-    growl = Object.assign({}, defaultOptions, growl);
-
-    this.setState({
-      items: [...this.state.items, growl]
-    });
-
-    growl.hide = () => this.removeGrowl(growl.key);
-
-    growl.update = props => {
-      this.setState(({ items }) => {
-        const newItems = [...items];
-        const item = newItems.find(i => i.key === growl.key);
-        if (item) {
-          Object.assign(item, props);
-          return {
-            items: newItems
-          };
-        }
-      });
-    };
+    const growl = Object.assign({}, defaultOptions, rest);
 
     if (!growl.sticky) {
-      growl.hideTimeout = setTimeout(growl.hide, growl.timeout);
+      growl.removeAt = Date.now() + growl.timeout;
     }
 
-    growl.clearTimeouts = () => {
-      clearTimeout(growl.hideTimeout);
+    setItems([...items, growl]);
+
+    growl.hide = () => removeGrowl(growl.key);
+
+    growl.update = (props) => {
+      setItems((items) => {
+        const newItems = [...items];
+        const item = newItems.find((i) => i.key === growl.key);
+        if (item) {
+          Object.assign(item, props);
+          return newItems;
+        }
+        return items;
+      });
     };
 
     if (callback) {
@@ -86,56 +90,42 @@ export class GrowlComponent extends React.Component {
     return growl;
   }
 
-  removeAllTimeouts() {
-    this.state.items.forEach(i => i.clearTimeouts());
-  }
+  const Cmp = growlComponent || Growl;
 
-  removeGrowl(key) {
-    const { items } = this.state;
-    const index = items.findIndex(i => i.key === key);
-
-    if (index !== -1) {
-      items[index].clearTimeouts();
-
-      this.setState({
-        items: [...items.slice(0, index), ...items.slice(index + 1)]
-      });
-    }
-  }
-
-  render() {
-    const { items } = this.state;
-
-    return (
-      <Outer>
-        <PoseGroup>
-          {items.map(item => (
-            <Growl
-              key={item.key}
-              onClick={() => !item.sticky && this.removeGrowl(item.key)}
-              type={item.type}
-            >
-              {item.message}
-            </Growl>
-          ))}
-        </PoseGroup>
-      </Outer>
-    );
-  }
+  return (
+    <Outer {...props}>
+      <AnimatePresence initial={false}>
+        {items.map((item) => (
+          <motion.li
+            key={item.key}
+            positionTransition
+            initial={{ opacity: 0, y: 50, scale: 0.3 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+          >
+            <Cmp
+              remove={() => !item.sticky && removeGrowl(item.key)}
+              {...item}
+            />
+          </motion.li>
+        ))}
+      </AnimatePresence>
+    </Outer>
+  );
 }
 
-export default opt => {
-  return new Promise(resolve => {
+export default function CrystallizeGrowl(opt) {
+  return new Promise((resolve) => {
     let options = opt;
     if (typeof opt === 'string') {
       options = {
-        message: opt
+        message: opt,
       };
     }
 
     emitter.emit('add', {
       callback: resolve,
-      ...options
+      ...options,
     });
   });
-};
+}

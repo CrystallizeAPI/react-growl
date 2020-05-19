@@ -1,82 +1,129 @@
+import React from 'react';
 import styled from 'styled-components';
-import posed from 'react-pose';
 
-export const Outer = styled.div.attrs(() => ({
+import IconInfo from './icon-info';
+import IconWarning from './icon-warning';
+import IconError from './icon-error';
+import IconX from './icon-x';
+
+export const Outer = styled.ul.attrs(() => ({
   className: 'crystallize-growl',
   role: 'alert',
-  'aria-live': 'assertive'
+  'aria-live': 'assertive',
 }))`
   position: fixed;
-  z-index: 999;
-  top: 15px;
-  right: 15px;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   align-items: flex-end;
-  width: 0;
+  list-style: none;
+  padding: 5px;
+  margin: 0;
+  pointer-events: none;
+
+  > li {
+    display: block;
+    margin: 5px;
+    padding: 0;
+    pointer-events: initial;
+  }
 `;
 
-function getItemClassNames({ type }) {
-  const classes = ['__item'];
-  if (type) {
-    classes.push(`__item--${type}`);
-  }
-  return classes.map(c => `crystallize-growl${c}`).join(' ');
-}
-
-function getTheme({ type }) {
-  switch (type) {
-    case 'error':
-      return `
-        background: orangered;
-        color: #fff;
-      `;
-    case 'warning':
-      return `
-        background: #f58ea5;
-        box-shadow: 0 0 5px hsl(347, 84%, 26%);
-      `;
-    case 'success':
-      return `
-        background: #75c575;
-        color: #fff;
-        box-shadow: 0 0 5px #75c575;
-      `;
-    default:
-      return `
-        background: #fff;
-      `;
-  }
-}
-
-const GrowlPosed = posed.div({
-  enter: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.5 }
-});
-
-export const Growl = styled(GrowlPosed).attrs(() => ({
-  className: getItemClassNames
-}))`
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-  padding: 10px 20px;
+const GrowlComponent = styled.div.attrs(({ type }) => {
+  return {
+    className: `crystallize-growl__item crystallize-growl__item-${
+      type || 'info'
+    }`,
+  };
+})`
   cursor: default;
-  color: #333;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  box-sizing: border-box;
-  transition: color 100ms, background-color 100ms;
-  border-radius: 20px;
-  transform-origin: center center;
-  min-width: 100px;
-  max-width: 400vw;
-  ${getTheme};
+  border-radius: 8px;
+  padding: 20px 30px 20px 20px;
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin: 5px;
+  max-width: 50vw;
 
-  &:not(:first-child) {
-    margin-top: 5px;
+  /* Defaults to info */
+  background: #c2e5e1;
+  color: #6c7d7b;
+
+  &.crystallize-growl__item-error {
+    background: #facbcf;
+    color: #967376;
+  }
+
+  &.crystallize-growl__item-warning {
+    background: #fdf5bf;
+    color: #9a946e;
   }
 
   ::selection {
     background: transparent;
   }
+
+  > svg {
+    display: inline-block;
+    margin-right: 20px;
+    width: 40px;
+    flex: 0 0 40px;
+  }
 `;
+
+const Text = styled.div.attrs(() => ({
+  className: 'crystallize-growl__item-text',
+}))`
+  margin-top: 5px;
+`;
+
+const Title = styled.strong.attrs(() => ({
+  className: 'crystallize-growl__item-title',
+}))`
+  display: block;
+  font-size: 16px;
+  margin: 0 0 10px;
+`;
+
+const RemoveButton = styled.button.attrs(() => ({
+  className: 'crystallize-growl__item-remove',
+}))`
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 10px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+`;
+
+const icons = {
+  info: IconInfo,
+  warning: IconWarning,
+  error: IconError,
+};
+
+export function Growl({ title, message, remove, type, sticky }) {
+  const Icon = icons[type] || icons.info;
+
+  return (
+    <GrowlComponent type={type}>
+      <Icon />
+      <Text>
+        {title && <Title>{title}</Title>}
+        {message}
+      </Text>
+      {!sticky && (
+        <RemoveButton type="button" aria-label="Close" onClick={remove}>
+          <IconX />
+        </RemoveButton>
+      )}
+    </GrowlComponent>
+  );
+}

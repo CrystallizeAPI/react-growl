@@ -4,8 +4,3 @@ body {
   font-family: sans-serif;
   min-height: 300vh;
 }
-
-.crystallize-growl {
-  top: auto !important;
-  bottom: 15px;
-}
