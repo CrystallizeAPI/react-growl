@@ -5,18 +5,21 @@ import growl, { GrowlScene } from '../src';
 
 function stickyGrowl() {
   growl({
-    message: 'You cannot click to remove me',
+    title: 'Ha ha. I am sticky',
+    message: 'You cannot click to remove me 🤓',
     sticky: true,
     type: 'warning',
   }).then((g) => {
     setTimeout(() => {
       g.update({
         type: 'info',
-        message: 'Hey, I just changed my own type =)',
+        title: 'I changed!',
+        message: "I'm still static though.",
       });
 
       setTimeout(() => {
         g.update({
+          title: 'All good',
           message: 'You can click to remove me now',
           sticky: false,
         });
