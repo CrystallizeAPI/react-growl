@@ -109,7 +109,3 @@ Hide the growl manually, because it is a static growl, or because you do not wan
 | defaultTimeout | number    | 7000    |
 
 Whatever other props you pass will be forwarded along to the underlying UL
-
-```
-
-```
