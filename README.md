@@ -2,7 +2,7 @@
 
 # @crystallize/react-growl
 
-A package for [React Growl Notifications](https://crystallize.com/developers/react-components/react-growl-notifications). This is a generic React package initially built for the [React Commerce boilerplate](https://crystallize.com/developers) in [Crystallize](https://crystallize.com).
+A package for [React Growl Notifications](https://crystallize.com/developers/react-components/react-growl-notifications). This is a generic React package initially built for the [React Commerce boilerplate](https://crystallize.com/developers) powered by  [Headless Ecommerce](https://crystallize.com/product).
 
 ## Install
 
