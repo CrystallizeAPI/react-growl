@@ -12,7 +12,7 @@ const getKey = (function () {
   return () => index++;
 })();
 
-export function GrowlScene({ growlComponent, ...props }) {
+export function GrowlScene({ growlComponent, defaultTimeout, ...props }) {
   const [items, setItems] = useState([]);
 
   // Listen for emitter events
@@ -55,7 +55,7 @@ export function GrowlScene({ growlComponent, ...props }) {
 
   function addGrowl({ callback, ...rest }) {
     const defaultOptions = {
-      timeout: 7000,
+      timeout: defaultTimeout || 7000,
       key: getKey(),
       type: 'info',
       sticky: false,
@@ -77,6 +77,11 @@ export function GrowlScene({ growlComponent, ...props }) {
         const item = newItems.find((i) => i.key === growl.key);
         if (item) {
           Object.assign(item, props);
+
+          if (!item.sticky) {
+            item.removeAt = Date.now() + item.timeout;
+          }
+
           return newItems;
         }
         return items;
@@ -119,7 +124,7 @@ export default function CrystallizeGrowl(opt) {
     let options = opt;
     if (typeof opt === 'string') {
       options = {
-        message: opt,
+        title: opt,
       };
     }
 
