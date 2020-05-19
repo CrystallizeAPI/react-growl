@@ -80,6 +80,7 @@ const Text = styled.div.attrs(() => ({
   className: 'crystallize-growl__item-text',
 }))`
   margin-top: 5px;
+  font-size: 14px;
 `;
 
 const Title = styled.strong.attrs(() => ({
@@ -87,7 +88,6 @@ const Title = styled.strong.attrs(() => ({
 }))`
   display: block;
   font-size: 16px;
-  margin: 0 0 10px;
 `;
 
 const RemoveButton = styled.button.attrs(() => ({
