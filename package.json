@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_ENV=development parcel ./public/index.html",
+    "dev": "NODE_ENV=development parcel --out-dir parcel-dist ./public/index.html",
     "build": "babel src -d dist",
     "prepare": "npm run build",
     "release": "release-it"
@@ -30,6 +30,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
+    "release-it": "^13.6.1",
     "styled-components": "^5.1.0"
   },
   "dependencies": {
