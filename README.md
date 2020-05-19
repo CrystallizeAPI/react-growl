@@ -4,7 +4,7 @@
 
 The [React Growl Notifications](https://crystallize.com/developers/react-components/react-growl-notifications) module used in [Crystallize PIM](https://pim.crystallize.com). This is a generic React package initially built for the [React boilerplates](https://crystallize.com/developers) powered by [Headless Ecommerce](https://crystallize.com/product).
 
-![alt text](https://raw.githubusercontent.com/CrystallizeAPI/react-image/HEAD/media/react-growl.gif 'Growl notifications preview')
+![alt text](https://raw.githubusercontent.com/CrystallizeAPI/react-growl/HEAD/media/react-growl.gif 'Growl notifications preview')
 
 ## Install
 
