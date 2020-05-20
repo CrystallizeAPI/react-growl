@@ -67,9 +67,9 @@ export function GrowlScene({ growlComponent, defaultTimeout, ...props }) {
       growl.removeAt = Date.now() + growl.timeout;
     }
 
-    setItems([...items, growl]);
+    setItems([growl, ...items]);
 
-    growl.hide = () => removeGrowl(growl.key);
+    growl.hide = () => emitter.emit('remove', growl.key);
 
     growl.update = (props) => {
       setItems((items) => {
