@@ -1,7 +1,7 @@
 {
   "name": "@crystallize/react-growl",
   "description": "A React package to do growl feedback",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
