@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import EE from 'event-emitter';
+import mitt from 'mitt';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { Outer, Growl } from './styles';
 
-const emitter = new EE();
+const emitter = mitt();
 
 const getKey = (function () {
   let index = 0;
