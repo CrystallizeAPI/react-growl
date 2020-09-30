@@ -19,7 +19,7 @@
     "url": "git@github.com:CrystallizeAPI/react-growl.git"
   },
   "peerDependencies": {
-    "framer-motion": "^1.11.0",
+    "framer-motion": "^2.7.6",
     "react": ">=16.8.0",
     "styled-components": ">=5.1.0"
   },
