@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import faker from 'faker';
 
-import growl, { GrowlScene } from '../src';
+import { growl, GrowlScene } from '../src';
 
 function stickyGrowl() {
   growl({
