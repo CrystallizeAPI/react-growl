@@ -119,7 +119,7 @@ export function GrowlScene({ growlComponent, defaultTimeout, ...props }) {
   );
 }
 
-export default function CrystallizeGrowl(opt) {
+export function growl(opt) {
   return new Promise((resolve) => {
     let options = opt;
     if (typeof opt === 'string') {

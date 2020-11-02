@@ -1,12 +1,16 @@
 {
   "name": "@crystallize/react-growl",
   "description": "A React package to do growl feedback",
-  "version": "2.3.0",
+  "version": "3.0.0-beta.3",
+  "source": "src/index.js",
   "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "unpkg": "dist/index.umd.js",
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development parcel --out-dir parcel-dist ./public/index.html",
-    "build": "babel src -d dist",
+    "build": "microbundle --jsx React.createElement",
+    "build-b": "babel src -d dist",
     "prepare": "npm run build",
     "release": "release-it"
   },
@@ -15,9 +19,9 @@
     "url": "git@github.com:CrystallizeAPI/react-growl.git"
   },
   "peerDependencies": {
-    "framer-motion": "^1.11.0",
-    "react": ">=16.8.0",
-    "styled-components": ">=5.1.0"
+    "framer-motion": "^2.7.6",
+    "react": "^16.13.1",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -28,6 +32,7 @@
     "auto-changelog": "^2.0.0",
     "faker": "^4.1.0",
     "framer-motion": "^2.7.6",
+    "microbundle": "^0.12.4",
     "parcel-bundler": "^1.12.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

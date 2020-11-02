@@ -36,7 +36,7 @@ import { GrowlScene } from '@crystallize/react-growl';
 ### Call it!
 
 ```
-import growl from '@crystallize/react-growl';
+import { growl } from '@crystallize/react-growl';
 
 // Regular
 const myGrowl = await growl({
