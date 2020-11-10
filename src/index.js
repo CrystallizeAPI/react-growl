@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import mitt from 'mitt';
 import { motion, AnimatePresence } from 'framer-motion';
+import mitt from 'mitt';
 
 import { Outer, Growl } from './styles';
 
