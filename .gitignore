@@ -5,3 +5,4 @@ node_modules
 *.log
 .cache
 package-lock.json
+.parcel-cache

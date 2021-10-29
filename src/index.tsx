@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import mitt from 'mitt';
 
-import { Outer, Growl } from './styles';
+import { Outer } from './styles';
+import { Growl } from './growl';
+import { GrowlType } from './interfaces';
 
 const emitter = mitt();
 
@@ -12,7 +14,16 @@ const getKey = (function () {
   return () => index++;
 })();
 
-export function GrowlScene({ growlComponent, defaultTimeout, ...props }) {
+interface GrowlSceneProps {
+  growlComponent?: React.ComponentType;
+  defaultTimeout?: number;
+}
+
+export function GrowlScene({
+  growlComponent,
+  defaultTimeout,
+  ...props
+}: GrowlSceneProps) {
   const [items, setItems] = useState([]);
 
   // Listen for emitter events
@@ -119,12 +130,26 @@ export function GrowlScene({ growlComponent, defaultTimeout, ...props }) {
   );
 }
 
-export function growl(opt) {
-  return new Promise((resolve) => {
-    let options = opt;
+interface growlProps {
+  timeout?: number;
+  type?: GrowlType;
+  sticky?: boolean;
+  title?: string;
+  message?: string;
+}
+
+export interface GrowlProps {
+  update: (options: string | growlProps) => void;
+  hide: () => void;
+}
+
+export function growl(opt: string | growlProps) {
+  return new Promise<GrowlProps>((resolve) => {
+    let options: growlProps;
+
     if (typeof opt === 'string') {
       options = {
-        title: opt,
+        title: opt as string,
       };
     }
 

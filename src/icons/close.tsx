@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { SVGProps } from 'react';
 
-export default function IconX(props) {
+export function CloseIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg width="14" height="14" fill="none" {...props}>
       <path
