@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { SVGProps } from 'react';
 
-export default function IconInfo(props) {
+export function InfoIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg width="40" height="40" fill="none" {...props}>
       <path

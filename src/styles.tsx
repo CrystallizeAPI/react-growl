@@ -1,10 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-
-import IconInfo from './icon-info';
-import IconWarning from './icon-warning';
-import IconError from './icon-error';
-import IconX from './icon-x';
 
 export const Outer = styled.ul.attrs(() => ({
   className: 'crystallize-growl',
@@ -33,13 +27,15 @@ export const Outer = styled.ul.attrs(() => ({
   }
 `;
 
-const GrowlComponent = styled.div.attrs(({ type }) => {
-  return {
-    className: `crystallize-growl__item crystallize-growl__item-${
-      type || 'info'
-    }`,
-  };
-})`
+export const GrowlComponent = styled.div.attrs(
+  ({ type }: { type: GrowlType }) => {
+    return {
+      className: `crystallize-growl__item crystallize-growl__item-${
+        type || 'info'
+      }`,
+    };
+  }
+)`
   cursor: default;
   border-radius: 8px;
   padding: 20px 30px 20px 20px;
@@ -51,7 +47,7 @@ const GrowlComponent = styled.div.attrs(({ type }) => {
   max-width: 50vw;
 
   /* Defaults to info */
-  background: #c2e5e1;
+  background: #bff6f8;
   color: #6c7d7b;
 
   &.crystallize-growl__item-error {
@@ -76,21 +72,21 @@ const GrowlComponent = styled.div.attrs(({ type }) => {
   }
 `;
 
-const Text = styled.div.attrs(() => ({
+export const Text = styled.div.attrs(() => ({
   className: 'crystallize-growl__item-text',
 }))`
   margin-top: 5px;
   font-size: 14px;
 `;
 
-const Title = styled.strong.attrs(() => ({
+export const Title = styled.strong.attrs(() => ({
   className: 'crystallize-growl__item-title',
 }))`
   display: block;
   font-size: 16px;
 `;
 
-const RemoveButton = styled.button.attrs(() => ({
+export const RemoveButton = styled.button.attrs(() => ({
   className: 'crystallize-growl__item-remove',
 }))`
   appearance: none;
@@ -102,28 +98,3 @@ const RemoveButton = styled.button.attrs(() => ({
   top: 0;
   right: 0;
 `;
-
-const icons = {
-  info: IconInfo,
-  warning: IconWarning,
-  error: IconError,
-};
-
-export function Growl({ title, message, remove, type, sticky }) {
-  const Icon = icons[type] || icons.info;
-
-  return (
-    <GrowlComponent type={type}>
-      <Icon />
-      <Text>
-        {title && <Title>{title}</Title>}
-        {message}
-      </Text>
-      {!sticky && (
-        <RemoveButton type="button" aria-label="Close" onClick={remove}>
-          <IconX />
-        </RemoveButton>
-      )}
-    </GrowlComponent>
-  );
-}

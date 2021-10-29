@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { SVGProps } from 'react';
 
-export default function IconWarning(props) {
+export function WarningIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg width="40" height="40" fill="none" {...props}>
       <mask
