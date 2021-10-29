@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import faker from 'faker';
 
 import { growl, GrowlScene, GrowlProps } from '../src';
+import { GrowlType } from '../src/interfaces';
 
 function stickyGrowl() {
   growl({
@@ -32,11 +33,15 @@ function Controlled() {
   const [shown, setShown] = useState(false);
   const ref = useRef<GrowlProps | undefined>();
 
+  const types = ['info', 'error', 'warning'];
+  const randomType = () => types[Math.floor(Math.random() * types.length)];
+
   async function add() {
     ref.current = await growl({
       title: 'You cannot click me',
       message: 'Use the instance method .hide() to hide me',
       sticky: true,
+      type: randomType(),
     });
     setShown(true);
   }
@@ -50,6 +55,7 @@ function Controlled() {
     ref.current.update({
       title: faker.hacker.verb(),
       message: faker.hacker.phrase(),
+      type: randomType(),
     });
   }
 
